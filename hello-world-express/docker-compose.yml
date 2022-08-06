@@ -1,7 +1,19 @@
 version: "3"
 services:
-  hello-world-express:
+  node-app:
     ports:
       - "3000:3000"
     env_file:
       - ./.env
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    env_file:
+      - ./.env
+    volumes:
+      - mongo-db:/data/db
+
+volumes:
+  mongo-db:

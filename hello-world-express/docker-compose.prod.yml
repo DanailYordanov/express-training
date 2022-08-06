@@ -1,6 +1,6 @@
 version: "3"
 services:
-  hello-world-express:
+  node-app:
     build:
       context: .
       args:
