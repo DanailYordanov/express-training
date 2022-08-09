@@ -5,7 +5,6 @@ const { MONGO_USER, MONGO_PASSWORD, MONGO_IP, MONGO_PORT, PORT } = require("./co
 const app = express();
 const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`;
 
-const userRouter = require("./routes/userRoutes");
 const authRouter = require("./routes/authRoutes");
 const apiRouter = require("./routes/apiRoutes");
 
@@ -27,7 +26,6 @@ app.use(passport.initialize());
 
 require("./strategies/local");
 
-app.use("/", userRouter);
 app.use("/auth", authRouter);
 app.use("/api", apiRouter);
 
