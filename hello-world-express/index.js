@@ -7,6 +7,7 @@ const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_
 
 const userRouter = require("./routes/userRoutes");
 const authRouter = require("./routes/authRoutes");
+const apiRouter = require("./routes/apiRoutes");
 
 const connectWithRetry = () => {
     mongoose
@@ -28,6 +29,7 @@ require("./strategies/local");
 
 app.use("/", userRouter);
 app.use("/auth", authRouter);
+app.use("/api", apiRouter);
 
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`);

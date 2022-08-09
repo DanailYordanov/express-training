@@ -1,7 +1,9 @@
+const crypto = require('crypto');
 const User = require("../models/User");
 
 exports.signup = (req, res) => {
-    var newUser = new User({ email: req.body.email });
+    var token = crypto.randomBytes(32).toString("hex");
+    var newUser = new User({ email: req.body.email, token: token });
 
     User.register(newUser, req.body.password, (err, user) => {
         if (err) {
@@ -12,7 +14,8 @@ exports.signup = (req, res) => {
         } else {
             res.json({
                 success: true,
-                message: "Your account was saved."
+                message: "Your account was saved.",
+                token: token
             });
         }
     });
@@ -29,7 +32,8 @@ exports.login = (req, res) => {
         } else if (user) {
             res.json({
                 success: true,
-                message: "Login successful."
+                message: "Login successful.",
+                token: user.token
             });
         } else {
             res.json({
