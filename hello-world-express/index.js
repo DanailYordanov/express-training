@@ -8,14 +8,14 @@ const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_
 const authRouter = require("./routes/authRoutes");
 const apiRouter = require("./routes/apiRoutes");
 
-const connectWithRetry = () => {
-    mongoose
-        .connect(mongoURL)
-        .then(() => console.log("Succesfully connected to MongoDB"))
-        .catch((e) => {
-            console.log(e);
-            setTimeout(connectWithRetry, 5000);
-        });
+const connectWithRetry = async () => {
+    try {
+        await mongoose.connect(mongoURL);
+        console.log("Succesfully connected to MongoDB")
+    } catch (err) {
+        console.log(err);
+        setTimeout(connectWithRetry, 5000);
+    }
 }
 
 connectWithRetry();
