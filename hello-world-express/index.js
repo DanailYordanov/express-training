@@ -29,6 +29,20 @@ require("./strategies/local");
 app.use("/auth", authRouter);
 app.use("/api", apiRouter);
 
+app.use((req, res, next) => {
+    res.status(404).json({
+        success: false,
+        error_message: "URL not found"
+    })
+});
+
+app.use((err, req, res, next) => {
+    res.status(500).json({
+        success: false,
+        error_message: err.message
+    })
+});
+
 app.listen(PORT, () => {
     console.log(`Example app listening on port ${PORT}`);
 })

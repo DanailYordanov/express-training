@@ -1,7 +1,7 @@
 const BTC = require("../models/BTC");
 const User = require("../models/User");
 
-exports.getLastPrice = async (req, res) => {
+exports.getLastPrice = async (req, res, next) => {
     try {
         const lastPrice = await BTC.findOne().sort({ createdAt: -1 }).populate('user');
 
@@ -21,12 +21,12 @@ exports.getLastPrice = async (req, res) => {
                 message: "There are no records in the DB."
             })
         }
-    } catch (e) {
-        console.log(e);
+    } catch (err) {
+        next(err);
     }
 }
 
-exports.updatePrice = async (req, res) => {
+exports.updatePrice = async (req, res, next) => {
     try {
         const user = await User.findOne({ token: req.body.token });
 
@@ -41,7 +41,7 @@ exports.updatePrice = async (req, res) => {
 
             updatedPrice.save((err) => {
                 if (err) {
-                    console.log(err);
+                    next(err);
                 }
             });
 
@@ -59,7 +59,7 @@ exports.updatePrice = async (req, res) => {
                 message: "Invalid token!"
             });
         }
-    } catch (e) {
-        console.log(e);
+    } catch (err) {
+        next(err);
     }
 }
